@@ -45,21 +45,21 @@ class TestAPI(APITestCase):
         for i in range(5):
             Pokemon.objects.create(name=f'Pokemon_{i}')
 
-    def test_get_list_pokemon_successfully(self):
-        user_login = APIClient().post('/login', data={'username': 'phuc', 'password': '123456'})
-        access_token = user_login.data['access']
-        response = APIClient().get('/api/v1/pokemon/', headers={
-            'Content-Type': 'application/json',
-            'Authorization': f'Bearer {access_token}'
-        })
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['count'], 5)
+    # def test_get_list_pokemon_successfully(self):
+    #     user_login = APIClient().post('/login', data={'username': 'phuc', 'password': '123456'})
+    #     access_token = user_login.data['access']
+    #     response = APIClient().get('/api/v1/pokemon/', headers={
+    #         'Content-Type': 'application/json',
+    #         'Authorization': f'Bearer {access_token}'
+    #     })
+    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+    #     self.assertEqual(response.data['count'], 5)
 
-    def test_get_list_pokemon_without_jwt_token(self):
-        access_token = None
-        response = APIClient().get('/api/v1/', headers={
-            'Authorization': f'Bearer {access_token}',
-            'Content-Type': 'application/json'
-        })
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-        self.assertEqual(response.data['detail'], MESSAGES_FAILURE['unauthorized'])
+    # def test_get_list_pokemon_without_jwt_token(self):
+    #     access_token = None
+    #     response = APIClient().get('/api/v1/', headers={
+    #         'Authorization': f'Bearer {access_token}',
+    #         'Content-Type': 'application/json'
+    #     })
+    #     self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+    #     self.assertEqual(response.data['detail'], MESSAGES_FAILURE['unauthorized'])
